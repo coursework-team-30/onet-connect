@@ -1,0 +1,25 @@
+.canvas {
+    display: grid;
+    grid-template-columns: 50vw;
+    grid-template-rows: 500px 20px;
+}
+
+.stop {
+    text-align: center;
+}
+
+.grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell {
+    padding: 5px;
+    border: 1px solid aquamarine;
+    margin: 2px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 5px;
+}

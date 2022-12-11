@@ -30,7 +30,7 @@ export class Game extends React.Component<IProps, IProps> {
 
     render() {
         return(
-            <div>
+            <div className="game">
                 {this.state.status === State.Start ? <GameStart onStart={() => this.handleStart()}/> : null}
                 {this.state.status === State.InGame ? <GameCanvas onStop={() => this.handleGameOver()}/> : null}
                 {this.state.status === State.Over ? <GameOver onRestart={() => this.handleReset()}/> : null}

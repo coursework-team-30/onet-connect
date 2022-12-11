@@ -1,6 +1,4 @@
-.start {
-    height: 50vw;
-    width: 50vw;
+.game {
     display: flex;
     justify-content: center;
     align-items: center;
