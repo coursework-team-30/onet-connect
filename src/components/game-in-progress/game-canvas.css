@@ -16,6 +16,7 @@
 
 .cell {
     padding: 5px;
+    background-color: aqua;
     border: 1px solid aquamarine;
     margin: 2px;
     width: 20px;
