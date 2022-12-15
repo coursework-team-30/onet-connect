@@ -17,10 +17,30 @@
 .cell {
     padding: 5px;
     background-color: aqua;
-    border: 1px solid aquamarine;
+    border: 3px solid aqua;
     margin: 2px;
     width: 20px;
     height: 20px;
     text-align: center;
     border-radius: 5px;
+    -webkit-user-select: none;
+}
+
+.hidden {
+    padding: 5px;
+    border: 3px solid;
+    margin: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    visibility: hidden;
+    -webkit-user-select: none;
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+.selected {
+    border: 3px solid beige;
 }
