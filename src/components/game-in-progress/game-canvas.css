@@ -1,7 +1,10 @@
+.parent {
+    position: relative;
+}
+
 .canvas {
-    display: grid;
-    grid-template-columns: 50vw;
-    grid-template-rows: 500px 20px;
+    position: absolute;
+    z-index: 0;
 }
 
 .stop {

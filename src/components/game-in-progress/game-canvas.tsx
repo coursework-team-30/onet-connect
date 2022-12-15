@@ -67,13 +67,12 @@ export class GameCanvas extends React.Component<any, Sprops> {
         const stack: number[][] = [];
         if (dfs(grid, start?.x as number, start?.y as number, grid.length, grid[0].length,
             0, "", end?.x as number, end?.y as number, visited, stack)) {
-            console.log(stack);
             let newGrid = grid;
             // @ts-ignore
             newGrid[start?.x][start?.y] = 0;
             // @ts-ignore
             newGrid[end?.x][end?.y] = 0;
-            console.log(newGrid);
+            this.drawLines(stack);
             this.setState({grid: newGrid, selected: undefined, start: undefined, end: undefined});
         } else {
             this.reset();
@@ -90,30 +89,59 @@ export class GameCanvas extends React.Component<any, Sprops> {
         } else {
             if (this.state.selected !== item) {
                 this.deleteStart();
-                this.setStart(item, {x, y})
+                this.setStart(item, {x, y});
             } else {
                 this.setEnd(item, {x, y});
             }
         }
     }
 
+    drawLines(path: number[][]) {
+        const myDivs = path.map(item => document.getElementById(`${item[0]}${item[1]}`) as HTMLDivElement);
+        for (let i = 0; i < myDivs.length - 1; i++) {
+            const [p, q] = [myDivs[i].offsetLeft + myDivs[i].offsetWidth / 2, myDivs[i].offsetTop + myDivs[i].offsetHeight / 2]
+            const [r, s] = [myDivs[i + 1].offsetLeft + myDivs[i + 1].offsetWidth / 2, myDivs[i + 1].offsetTop + myDivs[i + 1].offsetHeight / 2]
+
+            console.log(p, q, r, s);
+            const length = Math.sqrt((Math.abs(r - p) * Math.abs(r - p)) + (Math.abs(s - q) * Math.abs(s - q)));
+            const angle = Math.atan2(Math.abs(q-s),Math.abs(p-r))*(180/Math.PI);
+
+            var cx = ((p + r) / 2) - (length / 2);
+            var cy = ((q + s) / 2) - (4 / 2);
+            var htmlLine = "<div style='padding:0px; margin:0px; height:2px; background-color:red ; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+            // @ts-ignore
+            document.getElementById("overlay").innerHTML += htmlLine;
+        }
+        setTimeout(() => {
+            // @ts-ignore
+            document.getElementById("overlay").innerHTML = "";
+            console.log("waiting...")
+        }, 500);
+        return;
+    }
+
     render() {
         return (
-            <div className="canvas">
-                <div className="grid">
-                    {this.state.grid.map((row, x) => (
-                        <div className="row">
-                            {row.map((item, y) => (
-                                item !== 0 ? <div className={`cell ${this.checkSelection(x, y) ? "selected" : null}`}
-                                                  onClick={() => this.handleClick(x, y, item)}>
-                                    {item}
-                                </div> : <div className="hidden">{item}</div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-                <div className="stop">
-                    <button onClick={() => this.props.onStop()}>Stop</button>
+            <div className="parent">
+                <div id="overlay"></div>
+                <div className="canvas">
+                    <div className="grid">
+                        {this.state.grid.map((row, x) => (
+                            <div className="row">
+                                {row.map((item, y) => (
+                                    item !== 0 ?
+                                        <div className={`cell ${this.checkSelection(x, y) ? "selected" : null}`}
+                                             id={`${x}${y}`}
+                                             onClick={() => this.handleClick(x, y, item)}>
+                                            {item}
+                                        </div> : <div className="hidden" id={`${x}${y}`}>{item}</div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="stop">
+                        <button onClick={() => this.props.onBack()}>Back</button>
+                    </div>
                 </div>
             </div>
         );
