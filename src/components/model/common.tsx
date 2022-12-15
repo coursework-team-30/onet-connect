@@ -4,6 +4,11 @@ export enum State {
     Over
 }
 
+export interface position {
+    x: number;
+    y: number;
+}
+
 const base = [
     [1,2,3,4,5,6,7,8,9,10,11,12],
     [1,2,3,4,5,6,7,8,9,10,11,12],
