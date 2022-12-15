@@ -3,6 +3,7 @@ import {getGrid, position} from "../model/common";
 import "./game-canvas.css";
 import "../../algorithms/algorithm";
 import {dfs} from "../../algorithms/algorithm";
+import { fetchAllPaths } from "../../algorithms/fetchAllPossiblePaths";
 
 interface Sprops {
     grid: number[][];
@@ -64,15 +65,26 @@ export class GameCanvas extends React.Component<any, Sprops> {
         const end = this.state.end;
 
         const visited: boolean[][] = new Array(grid.length).fill(false).map(() => new Array(grid[0].length).fill(false));
+        const visitedForAllPaths: boolean[][] = new Array(grid.length).fill(false).map(() => new Array(grid[0].length).fill(false));
+        
         const stack: number[][] = [];
+        
+        const stackForAllPaths: number[][] = [];
+        const shortestStack: number[][] = [];
+
         if (dfs(grid, start?.x as number, start?.y as number, grid.length, grid[0].length,
             0, "", end?.x as number, end?.y as number, visited, stack)) {
+            // Finding all the paths to capture the shortest path in the shortestStack variable. 
+            fetchAllPaths(grid, start?.x as number, start?.y as number, grid.length, grid[0].length,
+                0, "", end?.x as number, end?.y as number, visitedForAllPaths, stackForAllPaths, shortestStack);
+            
             let newGrid = grid;
             // @ts-ignore
             newGrid[start?.x][start?.y] = 0;
             // @ts-ignore
             newGrid[end?.x][end?.y] = 0;
-            this.drawLines(stack);
+            // console.log(shortestStack);
+            this.drawLines(shortestStack);
             this.setState({grid: newGrid, selected: undefined, start: undefined, end: undefined});
         } else {
             this.reset();
