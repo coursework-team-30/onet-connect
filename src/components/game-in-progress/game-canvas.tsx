@@ -229,15 +229,14 @@ export class GameCanvas extends React.Component<any, Sprops> {
                             </div>
                         ))}
                     </div>
-                    <h1>
-                        {" "}
-                        Timer {this.state.minutes} :{" "}
+                    <div className="timer">
+                        {" "}{this.state.minutes} :{" "}
                         <a style={{color: this.state.minutes === 0 ? "red" : "black"}}>
                             {this.state.seconds}
                         </a>{" "}
-                    </h1>
+                    </div>
                     <div className="stop">
-                        <button onClick={() => this.props.onBack()}>Back</button>
+                        <button className="actionButton" onClick={() => this.props.onBack()}>Back</button>
                     </div>
                 </div>
             </div>

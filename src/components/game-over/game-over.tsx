@@ -5,7 +5,7 @@ export class GameOver extends React.Component<any, any> {
     render() {
         return(
             <div className="over">
-                <button onClick={() => this.props.onRestart()}>Restart</button>
+                <button className="actionButton" onClick={() => this.props.onRestart()}>Restart</button>
             </div>
         )
     }
